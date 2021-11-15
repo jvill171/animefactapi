@@ -1,27 +1,21 @@
 <script setup>
 import { ref } from "vue";
-import { useAdvice } from "../composables/useAdvice";
+import { useFact } from "../composables/useFact";
 
-const { advices, search } = useAdvice();
-
-const searchItem = ref("");
+const {animes, getAnimes} = useFact();
 </script>
 
 <template>
-  <div>
-    <input
-      v-model="searchItem"
-      @change="search(searchItem)"
-      type="text"
-      placeholder="Search an Advise..."
-      class="w-full py-4 mt-16 text-xl text-center rounded-full"
-    />
-    <div class="grid grid-cols-2 gap-16 pt-16">
-      <div v-for="(advice, index) in advices" :key="index">
-        <p>
-          {{ advice.advice }}
-        </p>
+<div mt-16>
+  <ul  class="grid grid-cols-3 gap-12">
+    <router-link
+     v-for="anime in animes" :key="anime"
+     :to="`/${anime.anime_name}/facts`">
+      <div class="hover:cursor-pointer bg-gray-600 mt-3 p-4 rounded-lg drop-shadow-2xl hover:scale-105">
+        <h3 class="text-center font-bold bg-black text-white rounded-full p-1 border-2 border-gray-500">{{anime.anime_name}}</h3>
+        <img class="rounded-lg mt-3 border-2 border-gray-500 overflow-clip h-64 w-52" :src="anime.anime_img">
       </div>
-    </div>
-  </div>
+    </router-link>
+  </ul>
+</div>
 </template>
